@@ -4,8 +4,12 @@ public class Measurement {
      * Constructor: initialize this object to be a measurement of 0 feet, 0
      * inches
      */
-    public Measurement() {
+    private int feet;
+    private int inches;
 
+    public Measurement() {
+        this.feet = 0;
+        this.inches = 0;
     }
 
     /**
@@ -13,7 +17,8 @@ public class Measurement {
      * the number of inches
      */
     public Measurement(int feet) {
-
+        this.feet = feet;
+        this.inches = 0;
     }
 
     /**
@@ -22,7 +27,8 @@ public class Measurement {
      * initialization
      */
     public Measurement(int feet, int inches) {
-
+        this.feet = feet;
+        this.inches = inches;
     }
 
     /**
@@ -30,7 +36,8 @@ public class Measurement {
      * Measurement has 1 foot and 6 inches, this method should return 1.
      */
     public int getFeet() {
-        return 0; // provided to allow the file to compile
+
+        return this.feet; // provided to allow the file to compile
     }
 
     /**
@@ -38,12 +45,23 @@ public class Measurement {
      * Measurement has 1 foot and 6 inches, this method should return 6.
      */
     public int getInches() {
-        return 0; // provided to allow the file to compile
+        return this.inches; // provided to allow the file to compile
     }
 
     /** Adds the argument m2 to the current measurement */
     public Measurement plus(Measurement m2) {
-        return new Measurement(); // provided to allow the file to compile
+        this.feet += m2.getFeet();
+        this.inches += m2.getInches();
+        if (this.inches<12) {
+            return this; // provided to allow the file to compile
+        } else {
+            int inches_quotient = this.inches/12;
+            int inches_remainder = this.inches % 12;
+            this.feet += inches_quotient;
+            this.inches = inches_remainder;
+            return this;
+        }
+
     }
 
     /**
@@ -51,7 +69,17 @@ public class Measurement {
      * that m2 will always be smaller than the current measurement.
      */
     public Measurement minus(Measurement m2) {
-        return new Measurement(); // provided to allow the file to compile
+
+        this.feet -= m2.getFeet();
+        this.inches -= m2.getInches();
+        if (this.inches>=0) {
+            return this; // provided to allow the file to compile
+        } else {
+            int total_inches = this.feet*12 + this.inches;
+            this.feet = total_inches/12;
+            this.inches = total_inches % 12;
+            return this;
+        }
     }
 
     /**
@@ -61,7 +89,10 @@ public class Measurement {
      * (3) should return an object that represents 1 foot, 9 inches.
      */
     public Measurement multiple(int multipleAmount) {
-        return new Measurement(); // provided to allow the file to compile
+        int total_inches = multipleAmount*(this.feet*12 + this.inches);
+        this.feet = total_inches/12;
+        this.inches = total_inches % 12;
+        return this;
     }
 
     /**
@@ -72,7 +103,13 @@ public class Measurement {
      */
     @Override
     public String toString() {
-        return new String(); // provided to allow the file to compile
+        //return new String(); // provided to allow the file to compile
+        return this.feet+"'"+this.inches+"''";
+    }
+
+    public static void main(String[] args){
+        Measurement c = new Measurement(0,8);
+        System.out.println(c.toString());
     }
 
 }
