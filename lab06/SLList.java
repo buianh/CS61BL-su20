@@ -100,6 +100,13 @@ public class SLList {
         return size;
     }
 
+    public boolean isEmpty(){
+        if (size==0){
+            return true;}
+        return false;
+        }
+
+
     /** Adds x to the front of the list. */
     public void addFirst(int x) {
         sentinel.next = new IntListNode(x, sentinel.next);
@@ -119,10 +126,37 @@ public class SLList {
     /** Adds x to the list at the specified index. */
     public void add(int index, int x) {
         // TODO
+        if (size == 0) {
+            sentinel.next = new IntListNode(x, sentinel);
+            sentinel.next.next = sentinel;
+        } else if (index>size) {
+            int new_index = size;
+            IntListNode p = sentinel;
+            while (new_index > 0) {
+                p= p.next;
+                new_index-=1;
+            }
+            p.next = new IntListNode(x,p.next);
+        } else {
+            IntListNode p = sentinel;
+            while (index > 0) {
+                p= p.next;
+                index-=1;
+            }
+            p.next = new IntListNode(x,p.next);
+        }
+        size+=1;
+
     }
 
     /** Destructively reverses this list. */
     public void reverse() {
         // TODO
+    }
+
+    public static void main(String[] args) {
+        SLList test2 = new SLList();
+        System.out.println(test2.size);
+        test2.add(1, 1);
     }
 }
