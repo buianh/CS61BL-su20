@@ -10,6 +10,22 @@ public class GregorianDate extends Date {
 
 
     // YOUR CODE HERE
+    @Override
+
+    public Date nextDate() {
+    int new_year = this.year;
+    int new_month = this.month;
+    int new_date = this.dayOfMonth + 1;
+    if (new_date > getMonthLength(new_month)) {
+        new_month += 1;
+        new_date = 1;
+    }
+    if (new_month > 12) {
+        new_year += 1;
+        new_month = 1;
+    }
+    return new GregorianDate(new_year, new_month, new_date);
+    }
 
     @Override
     public int dayOfYear() {

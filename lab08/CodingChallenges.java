@@ -1,3 +1,6 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class CodingChallenges {
 
     /**
@@ -6,6 +9,18 @@ public class CodingChallenges {
      */
     public static int missingNumber(int[] values) {
         // TODO
+        Set<Integer> targetSet = new HashSet<>();
+                //Arrays.stream(values).boxed().collect(Collectors.toSet());
+        for (int i = 0; i< values.length; i++) {
+            targetSet.add(values[i]);
+        }
+        int i = 0;
+        while (i <= targetSet.size()) {
+            if (!targetSet.contains(i)){
+                return i;
+            }
+            i += 1;
+        }
         return -1;
     }
 
@@ -15,6 +30,18 @@ public class CodingChallenges {
      */
     public static boolean sumTo(int[] values, int n) {
         // TODO
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i< values.length; i++) {
+            list.add(values[i]);
+        }
+        while (list.size()>0){
+            int current_int = list.get(0);
+            int left_over = n - current_int;
+            list.remove(0);
+            if (list.contains(left_over)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -24,6 +51,36 @@ public class CodingChallenges {
      */
     public static boolean isPermutation(String s1, String s2) {
         // TODO
-        return false;
+        Map<String, Integer> map = new HashMap<>();
+        String[] alphabets = s1.split("");
+        String[] beta = s2.split("");
+        for (int i = 0; i<alphabets.length; i++) {
+            Integer count = map.get(alphabets[i]);
+            if (count == null) {
+                map.put(alphabets[i],1);
+            } else {
+                map.put(alphabets[i],count+1);
+            }
+        }
+        for (int i = 0; i<beta.length; i++) {
+            Integer count = map.get(beta[i]);
+            if (count == null || count < 1) {
+                return false;
+            } else {
+                map.put(beta[i],count-1);
+            }
+        }
+        for (String key : map.keySet()) {
+           if (map.get(key) != 0) {
+               return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String args[]){
+        System.out.println(missingNumber(new int[] {0,1,5,2,4,6}));
+        System.out.println(sumTo(new int[] {0,1,5,3,4},9));
+        System.out.println(isPermutation("but", "btu"));
     }
 }
