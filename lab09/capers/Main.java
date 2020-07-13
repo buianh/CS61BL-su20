@@ -1,6 +1,8 @@
 package capers;
 
-import java.io.File;
+import java.io.*;
+
+import static capers.Dog.DOG_FOLDER;
 
 /** Canine Capers: A Gitlet Prelude.
  * @author Sean Dooher
@@ -10,8 +12,8 @@ public class Main {
     static final File CWD = new File(".");
 
     /** Main metadata folder. */
-    static final File CAPERS_FOLDER = null; // FIXME
-
+    static final File CAPERS_FOLDER = new File(".caper");//null; // FIXME
+    static final File story_file = new File("story.txt");
     /**
      * Runs one of three commands:
      * story [text] -- Appends "text" + a newline to a story file in the
@@ -50,6 +52,14 @@ public class Main {
             writeStory(args);
             break;
         // FIXME
+            case "dog":
+                 makeDog(args);
+                 break;
+
+            case "birthday":
+                celebrateBirthday(args);
+                break;
+
         default:
             exitWithError(String.format("Unknown command: %s", args[0]));
         }
@@ -66,8 +76,17 @@ public class Main {
      *    - story -- file containing the current story
      *
      */
-    public static void setupPersistence() {
+    public static void setupPersistence() throws IOException {
         // FIXME
+        if (!CAPERS_FOLDER.exists()) {
+            CAPERS_FOLDER.mkdir();
+            if (!DOG_FOLDER.exists()) {
+                DOG_FOLDER.mkdir();
+            }
+            if (!story_file.exists()){
+                story_file.createNewFile();
+            }
+        }
     }
 
     /**
@@ -76,7 +95,7 @@ public class Main {
      * @param args Array in format: {'story', text}
      */
     public static void writeStory(String[] args) {
-        validateNumArgs("story", args, 2);
+        Utils.writeContents(story_file,args[1]);
         // FIXME
     }
 
