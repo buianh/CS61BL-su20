@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class DBTable<T> {
     private List<T> entries;
@@ -48,7 +49,7 @@ public class DBTable<T> {
      */
     public <R extends Comparable<R>> List<T> getOrderedBy(Function<T, R> getter) {
         // TODO
-        return null;
+        return getEntries().stream().sorted((o1,o2)->(getter.apply(o1)).compareTo(getter.apply(o2))).collect(Collectors.toList());
     }
 
     /**
@@ -70,7 +71,7 @@ public class DBTable<T> {
      */
     public <R> List<T> getWhitelisted(Function<T, R> getter, Collection<R> whitelist) {
         // TODO
-        return null;
+        return getEntries().stream().filter(o1->whitelist.contains(getter.apply(o1))).collect(Collectors.toList());
     }
 
     /**
@@ -80,7 +81,7 @@ public class DBTable<T> {
      */
     public <R> DBTable<R> getSubtableOf(Function<T, R> getter) {
         // TODO
-        return null;
+        return new DBTable<R>(getEntries().stream().map(o1->getter.apply(o1)).collect(Collectors.toList()));
     }
 
     public static void main(String[] args) {
@@ -94,5 +95,13 @@ public class DBTable<T> {
         DBTable<User> t = new DBTable<>(users);
         List<User> l = t.getOrderedBy(User::getName);
         l.forEach(System.out::println);
+
+        List<String> whiteListedNames = Arrays.asList("Connor", "Shreya");
+        List<User> l1 = t.getWhitelisted(User::getName, whiteListedNames);
+        l1.forEach(System.out::println);
+
+        DBTable<String> names = t.getSubtableOf(User::getName);
+        System.out.println(names.entries);
     }
+
 }
