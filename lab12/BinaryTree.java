@@ -17,20 +17,28 @@ public class BinaryTree<T> {
     /* Returns the height of the tree. */
     public int height() {
         // TODO: YOUR CODE HERE
-        return 0;
+        return root.heightHelper();
     }
 
     /* Returns true if the tree's left and right children are the same height
        and are themselves completely balanced. */
     public boolean isCompletelyBalanced() {
         // TODO: YOUR CODE HERE
-        return false;
+        return root.balanceHelper();
     }
 
     /* Returns a BinaryTree representing the Fibonacci calculation for N. */
     public static BinaryTree<Integer> fibTree(int N) {
         BinaryTree<Integer> result = new BinaryTree<Integer>();
-        return null;
+        if (N==0|N==1){
+            result.root=new TreeNode<>(N);
+        } else {
+            TreeNode left = fibTree(N-1).root;
+            TreeNode right = fibTree(N-2).root;
+            result.root = new TreeNode((int) left.getItem()+ (int) right.getItem(),left,right);
+
+        }
+        return result;
     }
 
     /* Print the values in the tree in preorder: root value first, then values
@@ -92,6 +100,7 @@ public class BinaryTree<T> {
                                  new TreeNode("d", leafNode, leafNode));
     }
 
+
     /* Creates two BinaryTrees and prints them out in inorder. */
     public static void main(String[] args) {
         BinaryTree t;
@@ -101,6 +110,7 @@ public class BinaryTree<T> {
         print(t, "sample tree 1");
         t.sampleTree2();
         print(t, "sample tree 2");
+        System.out.println(t.fibTree(5).root.getItem());
     }
 
     /* Note: this class is public in this lab for testing purposes. However,
@@ -169,5 +179,22 @@ public class BinaryTree<T> {
         }
 
         // TODO: ADD HELPER METHODS HERE
+        public int heightHelper() {
+            if (item ==null) {return 0;}
+            else if (left==null&&right==null) {return 1;}
+            else if (left==null) {return 1+right.heightHelper();}
+            else if (right==null) {return 1+left.heightHelper();}
+            return 1+Math.max(left.heightHelper(),right.heightHelper());
+        }
+        public boolean balanceHelper(){
+            if (item==null) {return true;}
+            else if (left==null&&right==null) {return true;}
+            else if (left==null&&right!=null) {return false;}
+            else if (left!=null&&right==null) {return false;}
+            else if (left.heightHelper()!=right.heightHelper()) {
+                return false;
+            }
+            else {return left.balanceHelper() && right.balanceHelper();}
+        }
     }
 }
