@@ -211,9 +211,17 @@ public class AmoebaFamily implements Iterable<AmoebaFamily.Amoeba> {
             if (root != null) {
                 fringe.add(root);
             }
-            Amoeba root_new = root;
-            for (Amoeba a: root_new.children) {
-                fringe.add(a);
+            addHelper(root);
+        }
+
+        public void addHelper(Amoeba node) {
+            if (node.children!=null){
+                for (Amoeba a: node.children) {
+                    fringe.add(a);
+                }
+            }
+            for (Amoeba a: node.children) {
+                addHelper(a);
             }
         }
 
