@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 
 public class MinHeapTest {
 
-    @Test
+    //@Test
     public void test1() {
     }
 }

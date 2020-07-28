@@ -1,5 +1,5 @@
 /* A PriorityQueue class that uses a min heap to maintain ordering. */
-public class MinHeapPQ<T> implements PriorityQueue<T> {
+public class MinHeapPQ<T> extends MinHeap implements PriorityQueue<T> {
 
     /* The heap backing our MinHeapPQ. */
     private MinHeap<PriorityItem> heap;
@@ -13,13 +13,14 @@ public class MinHeapPQ<T> implements PriorityQueue<T> {
        from the MinHeapPQ. */
     public T peek() {
         // TODO: YOUR CODE HERE
-        return null;
+        return (T) contents.get(1);
     }
 
     /* Inserts ITEM with the priority value PRIORITYVALUE into the MinHeapPQ. If
        ITEM is already in the MinHeapPQ, throw an IllegalArgumentException. */
     public void insert(T item, double priorityValue) {
         // TODO: YOUR CODE HERE
+        contents.add(new PriorityItem(item,priorityValue));
     }
 
     /* Returns the item with the highest priority (smallest priority value), and
@@ -39,7 +40,7 @@ public class MinHeapPQ<T> implements PriorityQueue<T> {
     /* Returns the number of items in the MinHeapPQ. */
     public int size() {
         // TODO: YOUR CODE HERE
-        return 0;
+        return size;
     }
 
     /* Returns true if ITEM is stored in our MinHeapPQ. Note: Any priority value
