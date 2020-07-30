@@ -34,6 +34,7 @@ public class Graph implements Iterable<Integer> {
        weight WEIGHT. */
     public void addEdge(int v1, int v2, int weight) {
         // TODO: YOUR CODE HERE
+        adjLists[v1].add(new Edge(v1,v2,weight));
     }
 
     /* Adds an undirected Edge (V1, V2) to the graph with weight WEIGHT. If the
@@ -41,12 +42,21 @@ public class Graph implements Iterable<Integer> {
        weight WEIGHT. */
     public void addUndirectedEdge(int v1, int v2, int weight) {
         // TODO: YOUR CODE HERE
+        adjLists[v1].add(new Edge(v1,v2,weight));
+        adjLists[v2].add(new Edge(v1,v2,weight));
     }
 
     /* Returns true if there exists an Edge from vertex FROM to vertex TO.
        Returns false otherwise. */
     public boolean isAdjacent(int from, int to) {
         // TODO: YOUR CODE HERE
+        Iterator edgeIterator = adjLists[from].iterator();
+        while (edgeIterator.hasNext()){
+            Edge edge_next = (Edge) edgeIterator.next();
+            if (edge_next.to==to) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -54,12 +64,24 @@ public class Graph implements Iterable<Integer> {
        exists in the graph. */
     public List<Integer> neighbors(int v) {
         // TODO: YOUR CODE HERE
-        return null;
+        List all_neighbor = new ArrayList();
+        Iterator edgeIterator = adjLists[v].iterator();
+        while (edgeIterator.hasNext()){
+            Edge edge_next = (Edge) edgeIterator.next();
+            all_neighbor.add(edge_next.to);
+        }
+        return all_neighbor;
     }
     /* Returns the number of incoming Edges for vertex V. */
     public int inDegree(int v) {
         // TODO: YOUR CODE HERE
-        return 0;
+        int count = 0;
+        for (int i =0; i<adjLists.length;i++){
+            if (isAdjacent(i,v)){
+                count+=1;
+            }
+        }
+        return count;
     }
 
     /* Returns an Iterator that outputs the vertices of the graph in topological
@@ -139,6 +161,15 @@ public class Graph implements Iterable<Integer> {
        START and STOP are in this graph. If START == STOP, returns true. */
     public boolean pathExists(int start, int stop) {
         // TODO: YOUR CODE HERE
+        if (start==stop){
+            return true;
+        }
+        List result = dfs(start);
+        for (int i =0; i<result.size();i++) {
+            if (result.get(i).equals(stop)) {
+                return true;
+            }
+        }
         return false;
     }
 
