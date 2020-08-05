@@ -99,6 +99,7 @@ public class DLList<T extends Comparable<T>> {
        increasing order. */
     private void insertionSortHelper(T item) {
         // TODO: YOUR CODE HERE
+
     }
 
     /* Returns a copy of this DLList sorted using selection sort. Does not
@@ -128,7 +129,16 @@ public class DLList<T extends Comparable<T>> {
         DLList<T> oneHalf = new DLList<>();
         DLList<T> otherHalf = new DLList<>();
         // TODO: YOUR CODE HERE
-        return null;
+        Node node = sentinel.next;
+        for (int i =0; i<size/2;i++){
+            oneHalf.addLast(node.item);
+            node=node.next;
+        }
+        while (node!=sentinel){
+            otherHalf.addLast(node.item);
+            node=node.next;
+        }
+        return oneHalf.selectionSort().merge(otherHalf.selectionSort());
     }
 
     /* Returns the result of merging this DLList with LST. Does not modify the
@@ -168,8 +178,23 @@ public class DLList<T extends Comparable<T>> {
         DLList<T> equalElements = new DLList<>();
         DLList<T> largeElements = new DLList<>();
         T pivot = sentinel.next.item;
+        Node node = sentinel.next;
         // TODO: YOUR CODE HERE
-        return null;
+        while (node!= sentinel){
+            if (node.item.compareTo(pivot)<0){
+                smallElements.addLast(node.item);
+            } else if (node.item.compareTo(pivot)>0) {
+                largeElements.addLast(node.item);
+            } else {
+                equalElements.addLast(node.item);
+            }
+            node = node.next;
+        }
+        DLList<T> result = new DLList<>();
+        result.append(smallElements.quicksort());
+        result.append(equalElements.quicksort());
+        result.append(largeElements.quicksort());
+        return result;
     }
 
     /* Appends LST to the end of this DLList. */
