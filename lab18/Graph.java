@@ -1,9 +1,4 @@
-import java.util.LinkedList;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.Stack;
-import java.util.HashSet;
+import java.util.*;
 
 public class Graph implements Iterable<Integer> {
 
@@ -178,7 +173,36 @@ public class Graph implements Iterable<Integer> {
        List. If START == STOP, returns a List with START. */
     public List<Integer> path(int start, int stop) {
         // TODO: YOUR CODE HERE
-        return null;
+        List path = new ArrayList<Integer>();
+        if (!pathExists(start,stop)){
+            return path;
+        }
+        if (start==stop){
+            path.add(start);
+            return path;
+        }
+        List visited = new ArrayList<Integer>();
+        Iterator<Integer> iter = new DFSIterator(start);
+        while (iter.hasNext()){
+            int cur_vertex = iter.next();
+            if (cur_vertex==stop){
+                break;
+            }
+            visited.add(cur_vertex);
+        }
+        path.add(stop);
+        int end_vertex = stop;
+        for (int i = visited.size()-1; i >=0; i--){
+            if ((Integer) visited.get(i)==start && isAdjacent(start,end_vertex)){
+                path.add(visited.get(i));
+                break;
+            } else if (isAdjacent((Integer) visited.get(i),end_vertex)){
+                path.add(visited.get(i));
+                end_vertex=(Integer) visited.get(i);
+            }
+        }
+        Collections.reverse(path);
+        return path;
     }
 
     public List<Integer> topologicalSort() {

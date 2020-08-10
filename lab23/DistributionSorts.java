@@ -1,4 +1,7 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class DistributionSorts {
 
@@ -6,6 +9,16 @@ public class DistributionSorts {
        only 0, 1, ..., 9. */
     public static void countingSort(int[] arr) {
         // TODO: YOUR CODE HERE
+        HashMap<Integer,Integer> count = new HashMap <Integer, Integer>();
+        for (int i =0; i < arr.length; i++) {
+            if (!count.containsKey(arr[i])){
+                count.put(arr[i],1);
+            } else {
+                count.put(arr[i],count.get(arr[i])+1);
+            }
+        }
+        TreeMap<Integer, Integer> treeMap = new TreeMap<Integer, Integer>(count);
+
     }
 
     /* Destructively sorts ARR using LSD radix sort. */
@@ -21,6 +34,7 @@ public class DistributionSorts {
        rightmost digit of each number. */
     private static void countingSortOnDigit(int[] arr, int digit) {
         // TODO: YOUR CODE HERE
+
     }
 
     /* Returns the largest number of digits that any integer in ARR has. */
