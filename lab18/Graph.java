@@ -205,6 +205,17 @@ public class Graph implements Iterable<Integer> {
         return path;
     }
 
+    public Edge getEdge(int u, int v) {
+        for (int i = 0; i < adjLists[u].size(); i++) {
+            if (adjLists[u].get(i).to == v) {
+                return adjLists[u].get(i);
+            }
+        }
+        return null;
+    }
+
+    
+
     public List<Integer> topologicalSort() {
         ArrayList<Integer> result = new ArrayList<Integer>();
         Iterator<Integer> iter = new TopologicalIterator();
